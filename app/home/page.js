@@ -53,11 +53,11 @@ const Home = () => {
                 <div className='lg:w-[25%] order-1 lg:order-2'>
                     <div className='bg-white shadow-md rounded-md text-center overflow-hidden relative mb-4'>
                         <div className='w-full h-24 overflow-hidden'>
-                            <img src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg' className='w-full object-cover' />
+                            <img src='https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg' className='w-full object-cover' alt='Background Image' />
                         </div>
 
                         <div className='w-24 h-24 bg-white border-white border-4 rounded-full overflow-hidden absolute top-12 left-1/2 -translate-x-1/2'>
-                            <img src='https://cdn.hashnode.com/res/hashnode/image/upload/v1729543991781/910d7865-f0f9-4f58-8f2a-318661863505.jpeg?w=400&h=400&fit=crop&crop=faces&w=500&h=500&fit=crop&crop=entropy&auto=compress,format&format=webp&auto=compress,format&format=webp' className='object-cover' />
+                            <img src='https://cdn.hashnode.com/res/hashnode/image/upload/v1729543991781/910d7865-f0f9-4f58-8f2a-318661863505.jpeg?w=400&h=400&fit=crop&crop=faces&w=500&h=500&fit=crop&crop=entropy&auto=compress,format&format=webp&auto=compress,format&format=webp' className='object-cover' alt='Author Image' />
                         </div>
 
                         <div className='px-4 pt-12 pb-4'>
