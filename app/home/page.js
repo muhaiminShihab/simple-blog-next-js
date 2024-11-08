@@ -14,7 +14,7 @@ const Home = () => {
                             >
                                 <div className="w-full h-full">
                                     <img
-                                        src="https://solayman.com.bd/_next/image/?url=https%3A%2F%2Fimages.solayman.com.bd%2F2024%2F06%2Fwhat-is-javascript-450x253.jpg&w=3840&q=80"
+                                        src="/assets/what-is-javascript-450x253.webp"
                                         alt="Article Thumbnail"
                                         className="w-full object-cover"
                                     />
@@ -57,7 +57,7 @@ const Home = () => {
                         </div>
 
                         <div className='w-24 h-24 bg-white border-white border-4 rounded-full overflow-hidden absolute top-12 left-1/2 -translate-x-1/2'>
-                            <img src='https://cdn.hashnode.com/res/hashnode/image/upload/v1729543991781/910d7865-f0f9-4f58-8f2a-318661863505.jpeg?w=400&h=400&fit=crop&crop=faces&w=500&h=500&fit=crop&crop=entropy&auto=compress,format&format=webp&auto=compress,format&format=webp' className='object-cover' alt='Author Image' />
+                            <img src='/assets/author.jpg' className='object-cover' alt='Author Image' />
                         </div>
 
                         <div className='px-4 pt-12 pb-4'>
