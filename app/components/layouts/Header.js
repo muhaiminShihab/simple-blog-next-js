@@ -5,13 +5,13 @@ const Header = () => {
         <header className='bg-blue-500 text-white'>
             <div className='container mx-auto py-8 px-4'>
                 <div className='flex justify-between items-center gap-2 mb-8'>
-                    <div className='w-1/2 flex items-center gap-3'>
+                    <div className='w-1/2 flex items-center gap-3 logo-container'>
                         <div className='w-10 h-10 bg-white rounded-full overflow-hidden'>
                             <img src='https://cdn.hashnode.com/res/hashnode/image/upload/v1729543991781/910d7865-f0f9-4f58-8f2a-318661863505.jpeg?w=400&h=400&fit=crop&crop=faces&w=500&h=500&fit=crop&crop=entropy&auto=compress,format&format=webp&auto=compress,format&format=webp' className='object-cover' />
                         </div>
-                        <h3 className='text-2xl md:text-3xl md:font-bold'>Simple Blog</h3>
+                        <h3 className='text-2xl md:text-3xl font-bold'>Simple Blog</h3>
                     </div>
-                    <div className='w-1/2 flex justify-end items-center gap-2'>
+                    <div className='w-1/2 flex justify-end items-center'>
                         <a href='' className='hover:bg-[hsla(0,0%,100%,.2)] rounded-full p-2 transition-all'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#FFFFFF" fill="none">
                                 <path d="M17.5 17.5L22 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
