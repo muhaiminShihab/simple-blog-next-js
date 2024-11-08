@@ -1,4 +1,5 @@
 import React from 'react';
+import PostCard from '../components/PostCard';
 
 const Home = () => {
     return (
@@ -7,26 +8,7 @@ const Home = () => {
                 <div className='lg:w-[75%] order-2 lg:order-1 mt-3 lg:mt-0'>
                     <div className='flex items-center flex-wrap gap-3'>
                         {[...Array(9)].map((_, index) => (
-                            <a
-                                key={index}
-                                href="#"
-                                className="w-[48%] lg:w-[32%] mb-2 bg-white shadow-md rounded-md overflow-hidden transition-all"
-                            >
-                                <div className="w-full h-full">
-                                    <img
-                                        src="/assets/what-is-javascript-450x253.webp"
-                                        alt="Article Thumbnail"
-                                        className="w-full object-cover"
-                                    />
-                                </div>
-
-                                <div className="mt-2 pb-4 px-4">
-                                    <p className="text-sm">8 Nov, 2024</p>
-                                    <h3 className="text-lg leading-tight hover:text-blue-500 transition-all">
-                                        10 things you should check before delivering a Laravel Project.
-                                    </h3>
-                                </div>
-                            </a>
+                            <PostCard key={index} image="/assets/what-is-javascript-450x253.webp" title="10 things you should check before delivering a Laravel Project." url="#" date="8 Nov, 2024" />
                         ))}
 
                         {/* <div className='w-full bg-gray-200 rounded-md text-center py-16'>
@@ -60,10 +42,14 @@ const Home = () => {
                             <img src='/assets/author.jpg' className='object-cover' alt='Author Image' />
                         </div>
 
-                        <div className='px-4 pt-12 pb-4'>
-                            <h3 className='text-xl font-semibold'>Md Muhaiminul Islam Shihab</h3>
-                            <p className='-mt-1 text-lg'>Software Engineer</p>
-                            <p className='font-arial mt-2'>I'm a passionate software developer specializing in HTML, CSS, Bootstrap, Tailwind CSS, jQuery, JavaScript, Vue.js, Nuxt.js, React, Next.js, React Native, PHP, Laravel, Livewire, Filament PHP, MySQL, and PostgreSQL.</p>
+                        <div className="px-4 pt-12 pb-4">
+                            <h3 className="text-xl font-semibold" aria-label="Name">
+                                Md Muhaiminul Islam Shihab
+                            </h3>
+                            <h4 className="text-lg -mt-1" aria-label="Job Title">Software Engineer</h4>
+                            <p className="font-sans mt-2">
+                                I am a passionate software developer specializing in HTML, CSS, Bootstrap, Tailwind CSS, jQuery, JavaScript, Nuxt js, Next js, React Native, PHP, Laravel, MySQL, and PostgreSQL.
+                            </p>
                         </div>
                     </div>
 
