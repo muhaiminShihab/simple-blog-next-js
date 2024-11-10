@@ -1,8 +1,9 @@
+import Link from 'next/link'
 import React from 'react'
 
 const PostCard = ({ image, title, url, date }) => {
     return (
-        <a
+        <Link
             href={ url }
             className="w-[48%] lg:w-[32%] mb-2 bg-white shadow-md rounded-md overflow-hidden transition-all"
         >
@@ -20,7 +21,7 @@ const PostCard = ({ image, title, url, date }) => {
                     { title }
                 </h3>
             </div>
-        </a>
+        </Link>
     )
 }
 

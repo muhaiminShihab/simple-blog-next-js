@@ -3,12 +3,12 @@ import PostCard from './components/PostCard';
 
 const Home = () => {
     return (
-        <section className='container mx-auto rounded-md my-8 px-4 lg:px-0'>
+        <section className='container mx-auto my-10 px-4 lg:px-0'>
             <div className='flex justify-between flex-col lg:flex-row gap-2'>
                 <div className='lg:w-[75%] order-2 lg:order-1 mt-3 lg:mt-0'>
                     <div className='flex items-center flex-wrap gap-3'>
                         {[...Array(9)].map((_, index) => (
-                            <PostCard key={index} image="/assets/what-is-javascript-450x253.webp" title="10 things you should check before delivering a Laravel Project." url="#" date="8 Nov, 2024" />
+                            <PostCard key={index} image="/assets/laravel-docker.png" title="10 things you should check before delivering a Laravel Project." url={"post/" + (index + 1)} date="8 Nov, 2024" />
                         ))}
 
                         {/* <div className='w-full bg-gray-200 rounded-md text-center py-16'>
