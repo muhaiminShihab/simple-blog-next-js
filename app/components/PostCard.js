@@ -5,7 +5,7 @@ const PostCard = ({ image, title, url, date }) => {
     return (
         <Link
             href={ url }
-            className="w-[48%] lg:w-[32%] mb-2 bg-white shadow-md rounded-md overflow-hidden transition-all"
+            className="md:w-[48%] lg:w-[32%] mb-2 bg-white shadow-md rounded-md overflow-hidden transition-all"
         >
             <div className="w-full h-full">
                 <img

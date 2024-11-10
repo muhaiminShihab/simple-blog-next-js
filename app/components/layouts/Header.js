@@ -1,11 +1,12 @@
 'use client';
+import Link from 'next/link';
 import React from 'react';
 
 const Header = () => {
     return (
         <header className='bg-blue-500 text-white'>
             <div className='container mx-auto py-8 px-4'>
-                <div className='flex justify-between items-center gap-2 mb-8'>
+                <Link href='/' className='flex justify-between items-center gap-2 mb-8'>
                     <div className='w-1/2 flex items-center gap-3 logo-container'>
                         <div className='w-10 h-10 bg-white rounded-full overflow-hidden'>
                             <img src='/assets/author.jpg' className='object-cover' alt='Logo' />
@@ -32,7 +33,7 @@ const Header = () => {
                             </svg>
                         </a>
                     </div>
-                </div>
+                </Link>
 
                 <div className='flex flex-col md:flex-row justify-between items-center gap-2'>
                     <div className='md:w-1/2 flex items-center gap-2'>

@@ -1,3 +1,4 @@
+import PostCard from '@/app/components/PostCard'
 import React from 'react'
 
 const page = () => {
@@ -5,12 +6,12 @@ const page = () => {
     <section className='container mx-auto max-w-4xl my-10 px-4 lg:px-0'>
       <div className='text-center w-full'>
         <img src='/assets/laravel-docker.png' className='rounded-lg mx-auto' />
-        <h1 className='text-5xl font-semibold my-6'>10 things you should check before delivering a Laravel Project.</h1>
-        <p className='text-2xl'>Published on 8 Nov, 2024 at 12:00 AM</p>
+        <h1 className='text-3xl md:text-5xl font-semibold my-6'>10 things you should check before delivering a Laravel Project.</h1>
+        <p className='text-lg md:text-2xl'>Published on 8 Nov, 2024 at 12:00 AM</p>
       </div>
 
       <div className='mt-16'>
-        <p className='font-arial text-lg text-justify'>
+        <p className='font-arial md:text-lg text-justify'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent interdum erat ac tincidunt maximus. Etiam nec sodales nulla, quis gravida metus. Mauris sem enim, euismod id diam vitae, pulvinar vestibulum nulla. Cras turpis felis, porta ac leo id, vestibulum pharetra massa. Mauris iaculis arcu ac ornare imperdiet. Donec vestibulum, felis quis scelerisque finibus, enim enim lacinia diam, sed aliquet nisi mauris eu dui. Sed interdum pharetra lacus, eget venenatis velit eleifend suscipit. Vestibulum sit amet nunc venenatis, commodo ligula facilisis, mollis urna. Sed dapibus nulla accumsan, ultricies ligula at, rhoncus tortor. Interdum et malesuada fames ac ante ipsum primis in faucibus. <br /><br />
 
           Suspendisse blandit interdum lobortis. Integer rhoncus metus at leo feugiat, id placerat mi malesuada. Donec convallis lacus eu magna sagittis, vitae mattis ligula egestas. Praesent in blandit dui. Praesent mollis dui ac arcu gravida, eu condimentum felis finibus. Cras eget ultricies augue, et porta sem. Aliquam erat volutpat. Morbi viverra magna orci, ac blandit nibh euismod at. Proin enim mauris, rhoncus at tincidunt euismod, sodales in tortor. Nam sollicitudin vehicula justo ut eleifend. Nam tincidunt, enim dictum hendrerit semper, est eros placerat tortor, eu lacinia sem enim sit amet odio. In vehicula finibus sodales. Donec at velit a odio ullamcorper efficitur. Ut gravida at nibh et porta. Vivamus nec diam non velit gravida maximus. Donec odio sem, gravida a massa id, euismod consequat augue. <br /><br />
@@ -21,6 +22,15 @@ const page = () => {
 
           Vivamus odio libero, dapibus vel velit quis, accumsan volutpat ex. Maecenas tempor tincidunt tortor sed sagittis. Nulla molestie libero ligula, sit amet rutrum orci imperdiet sit amet. Vestibulum convallis auctor augue, ut ultrices tellus euismod a. Proin in eros ornare, mattis nisl in, lobortis massa. Vivamus vel massa in sapien mollis maximus in at quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum dictum, velit et ultricies lobortis, massa felis imperdiet tortor, id ullamcorper neque sapien et leo. Maecenas cursus, mauris non euismod dignissim, lectus mauris ullamcorper leo, non faucibus urna velit sed nisl. Donec sed felis nec dui dapibus dignissim vel sit amet nunc. Aliquam bibendum eget dui at condimentum. In lorem est, facilisis in enim ac, sagittis consequat libero. Suspendisse sit amet cursus turpis. Aliquam dolor quam, auctor in porta venenatis, malesuada venenatis risus. Mauris nunc ipsum, aliquet vitae dolor sed, iaculis commodo ipsum. Vestibulum eget faucibus diam, congue lobortis nulla.
         </p>
+      </div>
+      
+      <div className='mt-16'>
+        <h3 className='text-2xl mb-4'>Related Posts</h3>
+        <div className='flex items-center flex-wrap gap-3'>
+          {[...Array(6)].map((_, index) => (
+            <PostCard key={index} image="/assets/laravel-docker.png" title="10 things you should check before delivering a Laravel Project." url={"post/" + (index + 1)} date="8 Nov, 2024" />
+          ))}
+        </div>
       </div>
     </section>
   )
