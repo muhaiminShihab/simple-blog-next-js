@@ -6,24 +6,18 @@ const Header = () => {
     return (
         <header className='bg-blue-500 text-white'>
             <div className='container mx-auto py-8 px-4'>
-                <Link href='/' className='flex justify-between items-center gap-2 mb-8'>
-                    <div className='w-1/2 flex items-center gap-3 logo-container'>
+                <div className='flex justify-between items-center gap-2'>
+                    <Link href='/' className='w-1/2 flex items-center gap-3 logo-container'>
                         <div className='w-10 h-10 bg-white rounded-full overflow-hidden'>
                             <img src='/assets/author.jpg' className='object-cover' alt='Logo' />
                         </div>
-                        <h3 className='text-2xl md:text-3xl font-bold'>Simple Blog</h3>
-                    </div>
-                    <div className='w-1/2 flex justify-end items-center'>
+                        <h3 className='text-2xl md:text-3xl font-bold'>{ process.env.NEXT_PUBLIC_APP_NAME }</h3>
+                    </Link>
+                    <div className='w-1/2 flex justify-end items-center gap-4'>
                         <Link href='#' className='hover:bg-[hsla(0,0%,100%,.2)] rounded-full p-2 transition-all'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#FFFFFF" fill="none">
                                 <path d="M17.5 17.5L22 22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M20 11C20 6.02944 15.9706 2 11 2C6.02944 2 2 6.02944 2 11C2 15.9706 6.02944 20 11 20C15.9706 20 20 15.9706 20 11Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-                            </svg>
-                        </Link>
-                        <Link href='#' className='hover:bg-[hsla(0,0%,100%,.2)] rounded-full p-2 transition-all'>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#FFFFFF" fill="none">
-                                <path d="M6.57757 15.4816C5.1628 16.324 1.45336 18.0441 3.71266 20.1966C4.81631 21.248 6.04549 22 7.59087 22H16.4091C17.9545 22 19.1837 21.248 20.2873 20.1966C22.5466 18.0441 18.8372 16.324 17.4224 15.4816C14.1048 13.5061 9.89519 13.5061 6.57757 15.4816Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M16.5 6.5C16.5 8.98528 14.4853 11 12 11C9.51472 11 7.5 8.98528 7.5 6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5Z" stroke="currentColor" strokeWidth="1.5" />
                             </svg>
                         </Link>
                         <Link href='#' className='hover:bg-[hsla(0,0%,100%,.2)] rounded-full p-2 transition-all'>
@@ -33,9 +27,9 @@ const Header = () => {
                             </svg>
                         </Link>
                     </div>
-                </Link>
+                </div>
 
-                <div className='flex flex-col md:flex-row justify-between items-center gap-2'>
+                {/* <div className='flex flex-col md:flex-row justify-between items-center gap-2'>
                     <div className='md:w-1/2 flex items-center gap-2'>
                         <Link href='#' className='hover:bg-[hsla(0,0%,100%,.2)] rounded-full p-2 transition-all'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#FFFFFF" fill="none">
@@ -69,7 +63,7 @@ const Header = () => {
                         </Link>
                     </div>
                     <div className='md:w-1/2 text-end'>
-                        <div className='inline-block bg-white text-black rounded-full py-2 px-4 cursor-pointer hover:bg-gray-200 transition-all'>
+                        <div className='inline-block bg-white text-black rounded-full py-2 px-4 cursor-pointer hover:bg-gray-100 transition-all'>
                             <div className='flex justify-center items-center gap-2'>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
@@ -82,7 +76,7 @@ const Header = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </header>
     )

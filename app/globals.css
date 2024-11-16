@@ -20,13 +20,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.font-arial {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 /* logo container */
 @media screen and (max-width: 410px) {
   .logo-container h3 {
     font-size: 18px;
   }
+}
+
+/* post */
+.post-content p {
+  @apply my-4;
+}
+
+.post-content figure img {
+  @apply rounded-lg w-full;
+}
+
+.post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
+  @apply text-3xl mt-10;
 }
