@@ -4,8 +4,8 @@ import Footer from "./components/layouts/Footer";
 import { Host_Grotesk } from "next/font/google"; // Import correctly from next/font/google
 
 export const metadata = {
-  title: "Simple Blog by Muhaimin Shihab",
-  description: "Simple Blog by Muhaimin Shihab",
+  title: process.env.NEXT_PUBLIC_APP_NAME,
+  description: "A blog built with Next.js and Tailwind CSS",
 };
 
 // Configure Host Grotesk font

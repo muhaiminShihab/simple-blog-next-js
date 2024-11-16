@@ -3,11 +3,36 @@ import CategoryCard from '@/app/components/CategoryCard';
 import PostCard from '@/app/components/PostCard';
 
 const Home = async () => {
-    const postRes = await fetch(`${process.env.API_BASE_URL}/posts`);
-    const posts = await postRes.json();
+    const fetchPosts = async () => {
+        try {
+            const res = await fetch(`${process.env.API_BASE_URL}/posts`);
+            if (res.ok) {
+                const posts = await res.json();
+                return posts;
+            }
+        } catch (err) {
+            console.error("Error fetching posts:", err);
+        }
 
-    const categoryRes = await fetch(`${process.env.API_BASE_URL}/categories`);
-    const categories = await categoryRes.json();
+        return [];
+    }
+
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch(`${process.env.API_BASE_URL}/categories`);
+            if (res.ok) {
+                const categories = await res.json();
+                return categories;
+            }
+        } catch (err) {
+            console.error("Error fetching categories:", err);
+        }
+
+        return [];
+    }
+
+    const posts = await fetchPosts();
+    const categories = await fetchCategories();
 
     return (
         <section className='container mx-auto my-10 px-4 lg:px-0'>
