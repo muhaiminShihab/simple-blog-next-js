@@ -75,6 +75,7 @@ const page = async ({ params }) => {
         authorAvatar = authorData.avatar;
         formattedDate = dateFormatter(new Date(post.date));
     }
+    
 
     return (
         <section className='container mx-auto max-w-4xl my-10 px-4 lg:px-0'>
@@ -110,7 +111,7 @@ const page = async ({ params }) => {
                     </div>
                     <div className="text-sm flex items-center gap-1">
                         <span>
-                            <Share iconSize={18} iconColor='#000000' link='#' />
+                            <Share iconSize={18} iconColor='#000000' link={post.slug} />
                         </span>
                         <span className="text-sm font-semibold">Share</span>
                     </div>

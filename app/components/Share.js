@@ -3,22 +3,21 @@ import Link from 'next/link'
 import React from 'react'
 
 const Share = ({ iconSize = 24, iconColor = '#FFFFFF', link }) => {
-    const shareLink = link || (typeof window !== 'undefined' ? window.location.href : '');
 
     const generateShareUrl = (platform) => {
         switch (platform) {
             case 'facebook':
-                return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareLink)}`;
+                return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
             case 'twitter':
-                return `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareLink)}&text=Check this out!`;
+                return `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}&text=Check this out!`;
             case 'whatsapp':
-                return `https://api.whatsapp.com/send?text=${encodeURIComponent(shareLink)}`;
+                return `https://api.whatsapp.com/send?text=${encodeURIComponent(link)}`;
             case 'linkedin':
-                return `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareLink)}&title=Check this out!`;
+                return `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(link)}&title=Check this out!`;
             case 'email':
-                return `mailto:?subject=Check this out!&body=${encodeURIComponent(shareLink)}`;
+                return `mailto:?subject=Check this out!&body=${encodeURIComponent(link)}`;
             default:
-                return encodeURIComponent(shareLink);
+                return encodeURIComponent(link);
         }
     };
 
