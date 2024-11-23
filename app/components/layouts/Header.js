@@ -1,9 +1,47 @@
 'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Share from '../Share';
 
 const Header = () => {
+    const [siteData, setSiteData] = useState({
+        title: process.env.NEXT_PUBLIC_APP_NAME,
+        description: process.env.NEXT_PUBLIC_APP_DESCRIPTION,
+        url: process.env.NEXT_PUBLIC_APP_URL,
+        site_logo: "/assets/author.jpg",
+        site_icon: "/assets/author.jpg",
+    });
+
+    useEffect(() => {
+        const fetchSiteData = async () => {
+            try {
+                const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
+                const encodedCredentials = btoa(credentials);
+
+                const res = await fetch(`${process.env.API_BASE_URL}/settings`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Basic ${encodedCredentials}`,
+                    },
+                });
+
+                console.log(res);
+
+                if (res.ok) {
+                    const data = await res.json();
+                    setSiteData(data);
+
+                    console.log(data);
+                    
+                }
+            } catch (err) {
+                console.error("Error fetching site data:", err);
+            }
+        };
+
+        fetchSiteData();
+    });
+
     return (
         <header className='bg-blue-500 text-white'>
             <div className='container mx-auto py-4 px-4'>
