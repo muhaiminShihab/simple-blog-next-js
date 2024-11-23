@@ -50,7 +50,7 @@ const page = async ({ params }) => {
                         ))
                     }
 
-                    {/* <div className='w-full bg-gray-100 rounded-md text-center py-16'>
+                    {/* <div className='w-full bg-gray-100 rounded-lg text-center py-16'>
                             <img src='/assets/404.svg' className='w-1/3 mx-auto' />
                             <h3 className='text-xl'>No Data Found. Stay Tuned.</h3>
                         </div> */}
