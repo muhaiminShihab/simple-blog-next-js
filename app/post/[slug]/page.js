@@ -1,6 +1,7 @@
 import React from 'react'
 import he from 'he'
-import Share from '@/app/components/Share';
+import Share from '@/app/components/Share'
+import { fetchPost, fetchAuthor, fetchImageUrl } from '@/app/utils/wpApis'
 
 const page = async ({ params }) => {
     const slug = params.slug;
@@ -14,68 +15,30 @@ const page = async ({ params }) => {
             day: "numeric",
             year: "numeric",
         }).format(date);
-    }
+    };
 
     let formattedDate = dateFormatter();
+    let post = {};
 
-    const fetchPost = async () => {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/posts?slug=${slug}`);
-            if (res.ok) {
-                const post = await res.json();
-                return post[0];
-            }
-        } catch (err) {
-            console.error("Error fetching post:", err);
+    try {
+        // Fetch post data
+        const postData = await fetchPost(slug);
+
+        if (postData) {
+            post = postData;
+
+            // Fetch additional details asynchronously
+            imageUrl = await fetchImageUrl(post.featured_media) || imageUrl;
+
+            const authorData = await fetchAuthor(post.author);
+            authorName = authorData?.name || authorName;
+            authorAvatar = authorData?.avatar || authorAvatar;
+
+            formattedDate = dateFormatter(new Date(post.date));
         }
-
-        return null;
-    };
-
-    const fetchAuthorDetails = async (author) => {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/users/${author}`);
-            if (res.ok) {
-                const authorData = await res.json();
-                return {
-                    name: authorData.name,
-                    avatar: authorData.avatar_urls[24],
-                };
-            }
-        } catch (err) {
-            console.error("Error fetching author details:", err);
-        }
-
-        return {
-            name: process.env.NEXT_PUBLIC_AUTHOR_NAME,
-            avatar: "/assets/default.png",
-        }
-    };
-
-    async function fetchImageUrl(imgId) {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/media/${imgId}`);
-            if (res.ok) {
-                const media = await res.json();
-                return media.source_url || "/assets/default.png";
-            }
-        } catch (err) {
-            console.error("Error fetching image URL:", err);
-        }
-
-        return "/assets/default.png";
+    } catch (error) {
+        console.error("Error fetching page data:", error);
     }
-
-    const post = await fetchPost();
-    if (post) {
-        imageUrl = await fetchImageUrl(post.featured_media || "/assets/default.png");
-        const author = post.author;
-        const authorData = await fetchAuthorDetails(author);
-        authorName = authorData.name;
-        authorAvatar = authorData.avatar;
-        formattedDate = dateFormatter(new Date(post.date));
-    }
-    
 
     return (
         <section className='container mx-auto max-w-4xl my-10 px-4 lg:px-0'>

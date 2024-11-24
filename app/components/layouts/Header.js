@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import Share from '../Share';
-import he from 'he';
+import { fetchSiteData } from '@/app/utils/wpApis';
 
 const Header = async () => {
     let siteData = {
@@ -12,48 +12,9 @@ const Header = async () => {
         site_icon: "/assets/author.jpg",
     };
 
-    const fetchSiteData = async () => {
-        try {
-            const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
-            const encodedCredentials = btoa(credentials);
-
-            const res = await fetch(`${process.env.API_BASE_URL}/settings`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Basic ${encodedCredentials}`,
-                },
-            });
-
-            if (res.ok) {
-                const data = await res.json();
-
-                siteData = {
-                    title: he.decode(data.title),
-                    description: data.description,
-                    site_logo: data.site_logo ? await fetchImageUrl(data.site_logo) : "/assets/author.jpg",
-                    site_icon: data.site_icon ? await fetchImageUrl(data.site_icon) : "/assets/author.jpg",
-                };
-            }
-        } catch (err) {
-            console.error("Error fetching site data:", err);
-        }
-    };
-
-    async function fetchImageUrl(imgId) {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/media/${imgId}`);
-            if (res.ok) {
-                const media = await res.json();
-                return media.source_url || "/assets/author.jpg";
-            }
-        } catch (err) {
-            console.error("Error fetching image URL:", err);
-        }
-
-        return "/assets/default.png";
-    }
-
-    await fetchSiteData();
+    await fetchSiteData().then((data) => {
+        siteData = data;
+    });
 
     return (
         <header className='bg-blue-500 text-white'>

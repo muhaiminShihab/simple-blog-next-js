@@ -1,36 +1,22 @@
 import CategoryCard from '@/app/components/CategoryCard';
 import PostCard from '@/app/components/PostCard';
 import React from 'react';
+import { fetchCategory, fetchCategoryPosts } from '@/app/utils/wpApis';
 
 const page = async ({ params }) => {
     const slug = params.slug;
-    
-    const fetchCategory = async () => {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/categories?slug=${slug}`);
-            if (res.ok) {
-                const category = await res.json();
-                return category[0];
-            }
-        } catch (err) {
-            console.error("Error fetching category:", err);
-        }
-    };
+    let category = {};
+    let posts = [];
 
-    const fetchCategoryPosts = async (id) => {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/posts?categories=${id}`);
-            if (res.ok) {
-                const posts = await res.json();
-                return posts;
-            }
-        } catch (err) {
-            console.error("Error fetching category posts:", err);
-        }
-    };
+    try {
+        category = await fetchCategory(slug);
 
-    const category = await fetchCategory();
-    const posts = await fetchCategoryPosts(category.id);
+        if (category && category.id) {
+            posts = await fetchCategoryPosts(category.id);
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
 
     return (
         <section className='container mx-auto max-w-4xl my-10 px-4 lg:px-0'>
