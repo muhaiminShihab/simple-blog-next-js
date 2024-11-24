@@ -1,56 +1,69 @@
-'use client';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Share from '../Share';
+import he from 'he';
 
-const Header = () => {
-    const [siteData, setSiteData] = useState({
+const Header = async () => {
+    let siteData = {
         title: process.env.NEXT_PUBLIC_APP_NAME,
         description: process.env.NEXT_PUBLIC_APP_DESCRIPTION,
         url: process.env.NEXT_PUBLIC_APP_URL,
         site_logo: "/assets/author.jpg",
         site_icon: "/assets/author.jpg",
-    });
+    };
 
-    useEffect(() => {
-        const fetchSiteData = async () => {
-            try {
-                const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
-                const encodedCredentials = btoa(credentials);
+    const fetchSiteData = async () => {
+        try {
+            const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
+            const encodedCredentials = btoa(credentials);
 
-                const res = await fetch(`${process.env.API_BASE_URL}/settings`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Basic ${encodedCredentials}`,
-                    },
-                });
+            const res = await fetch(`${process.env.API_BASE_URL}/settings`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Basic ${encodedCredentials}`,
+                },
+            });
 
-                console.log(res);
+            if (res.ok) {
+                const data = await res.json();
 
-                if (res.ok) {
-                    const data = await res.json();
-                    setSiteData(data);
-
-                    console.log(data);
-                    
-                }
-            } catch (err) {
-                console.error("Error fetching site data:", err);
+                siteData = {
+                    title: he.decode(data.title),
+                    description: data.description,
+                    site_logo: data.site_logo ? await fetchImageUrl(data.site_logo) : "/assets/author.jpg",
+                    site_icon: data.site_icon ? await fetchImageUrl(data.site_icon) : "/assets/author.jpg",
+                };
             }
-        };
+        } catch (err) {
+            console.error("Error fetching site data:", err);
+        }
+    };
 
-        fetchSiteData();
-    });
+    async function fetchImageUrl(imgId) {
+        try {
+            const res = await fetch(`${process.env.API_BASE_URL}/media/${imgId}`);
+            if (res.ok) {
+                const media = await res.json();
+                return media.source_url || "/assets/author.jpg";
+            }
+        } catch (err) {
+            console.error("Error fetching image URL:", err);
+        }
+
+        return "/assets/default.png";
+    }
+
+    await fetchSiteData();
 
     return (
         <header className='bg-blue-500 text-white'>
             <div className='container mx-auto py-4 px-4'>
                 <div className='flex justify-between items-center gap-2'>
                     <Link href='/' className='w-1/2 flex items-center gap-3 logo-container'>
-                        {/* <div className='w-10 h-10 bg-white rounded-full overflow-hidden'>
-                            <img src='/assets/author.jpg' className='object-cover' alt='Logo' />
-                        </div> */}
-                        <h3 className='text-2xl md:text-3xl font-bold'>{process.env.NEXT_PUBLIC_APP_NAME}</h3>
+                        <div className='w-10 h-10 bg-white rounded-full overflow-hidden'>
+                            <img src={siteData.site_logo} className='object-cover' alt='Logo' />
+                        </div>
+                        <h3 className='text-2xl md:text-3xl font-bold'>{siteData.title}</h3>
                     </Link>
                     <div className='w-1/2 flex justify-end items-center gap-4'>
                         <Link href='#' className='hover:bg-[hsla(0,0%,100%,.2)] rounded-full p-2 transition-all'>
