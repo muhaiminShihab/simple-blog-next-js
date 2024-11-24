@@ -115,7 +115,7 @@ export const fetchAuthor = async (id) => {
             const authorData = await res.json();
             return {
                 name: authorData.name,
-                avatar: authorData.avatar_urls[24],
+                avatar: authorData.avatar_urls[96],
             };
         }
     } catch (err) {
