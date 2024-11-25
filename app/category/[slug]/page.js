@@ -4,7 +4,7 @@ import React from 'react';
 import { fetchCategory, fetchCategoryPosts } from '@/app/utils/wpApis';
 
 const page = async ({ params }) => {
-    const slug = params.slug;
+    const { slug } = await params;
     let category = {};
     let posts = [];
 

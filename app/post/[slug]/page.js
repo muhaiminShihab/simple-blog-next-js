@@ -4,7 +4,8 @@ import Share from '@/app/components/Share'
 import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments } from '@/app/utils/wpApis'
 
 const page = async ({ params }) => {
-    const slug = params.slug;
+    const { slug } = await params;
+
     let imageUrl = "/assets/default.png";
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
@@ -77,10 +78,7 @@ const page = async ({ params }) => {
                         <span className="text-sm font-semibold">{totalComments}</span>
                     </div>
                     <div className="text-sm flex items-center gap-1">
-                        <span>
-                            <Share iconSize={18} iconColor='#000000' link={post.slug} />
-                        </span>
-                        <span className="text-sm font-semibold">Share</span>
+                        <Share iconSize={18} iconColor='#000000' link={process.env.NEXT_PUBLIC_APP_URL + "/post/" + post.slug} withText={true} />
                     </div>
                 </div>
                 <img src={imageUrl} alt='#' className='rounded-lg mx-auto' />
