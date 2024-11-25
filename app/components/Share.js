@@ -3,9 +3,6 @@ import Link from 'next/link'
 import React from 'react'
 
 const Share = ({ iconSize = 24, iconColor = '#FFFFFF', link, withText = false }) => {
-    console.log("link", link);
-    
-
     const generateShareUrl = (platform) => {
         switch (platform) {
             case 'facebook':

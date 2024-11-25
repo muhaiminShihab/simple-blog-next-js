@@ -29,7 +29,7 @@ body {
 
 /* post */
 .post-content p {
-  @apply my-4;
+  @apply my-4 text-wrap;
 }
 
 .post-content figure img {
@@ -38,4 +38,10 @@ body {
 
 .post-content h1, .post-content h2, .post-content h3, .post-content h4, .post-content h5, .post-content h6 {
   @apply text-3xl mt-10;
+}
+
+.post-content pre,
+.post-content blockquote,
+.post-content em {
+  @apply text-wrap;
 }
