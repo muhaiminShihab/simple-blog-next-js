@@ -26,12 +26,13 @@ const page = async ({ params }) => {
                         posts.map((post, index) => (
                             <PostCard
                                 key={index}
-                                imgId={post.featured_media || "/assets/default.png"}
+                                imgId={post.featured_media}
                                 title={post.title.rendered}
-                                url={"/post/" + post.slug}
+                                slug={post.slug}
                                 content={post.excerpt.rendered}
                                 date={post.date}
                                 author={post.author}
+                                id={post.id}
                             />
                         ))
                     }

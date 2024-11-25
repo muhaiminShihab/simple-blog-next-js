@@ -151,3 +151,15 @@ export const fetchCategoryPosts = async (id) => {
         console.error("Error fetching category posts:", err);
     }
 };
+
+export const fetchPostComments = async (id) => {
+    try {
+        const res = await fetch(`${process.env.API_BASE_URL}/comments?post=${id}`);
+        if (res.ok) {
+            const comments = await res.json();
+            return comments;
+        }
+    } catch (err) {
+        console.error("Error fetching post comments:", err);
+    }
+};

@@ -8,6 +8,7 @@ const page = async ({ params }) => {
     let imageUrl = "/assets/default.png";
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
+    let totalComments = 0;
 
     const dateFormatter = (date = new Date()) => {
         return new Intl.DateTimeFormat("en-US", {
@@ -35,6 +36,8 @@ const page = async ({ params }) => {
             authorAvatar = authorData?.avatar || authorAvatar;
 
             formattedDate = dateFormatter(new Date(post.date));
+
+            totalComments = await fetchPostComments(post.id).length;
         }
     } catch (error) {
         console.error("Error fetching page data:", error);
@@ -70,7 +73,7 @@ const page = async ({ params }) => {
                                 <path d="M11.9955 12H12.0045M15.991 12H16M8 12H8.00897" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </span>
-                        <span className="text-sm font-semibold">{Math.floor(Math.random() * 100)}</span>
+                        <span className="text-sm font-semibold">{totalComments}</span>
                     </div>
                     <div className="text-sm flex items-center gap-1">
                         <span>

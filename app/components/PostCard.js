@@ -1,11 +1,13 @@
 import Link from "next/link";
 import React from "react";
 import he from "he";
+import { fetchAuthor, fetchImageUrl, fetchPostComments } from "../utils/wpApis";
 
-const PostCard = async ({ imgId, title, content, url, date, author }) => {
+const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
     let imageUrl = "/assets/default.png";
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
+    let totalComments = 0;
 
     const decodedTitle = he.decode(title);
     const decodedContent = he.decode(content).replace(/<\/?[^>]+(>|$)/g, "");
@@ -14,53 +16,21 @@ const PostCard = async ({ imgId, title, content, url, date, author }) => {
         day: "numeric",
     }).format(new Date(date));
 
-    async function fetchImageUrl(imgId) {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/media/${imgId}`);
-            if (res.ok) {
-                const media = await res.json();
-                return media.source_url || "/assets/default.png";
-            }
-        } catch (err) {
-            console.error("Error fetching image URL:", err);
-        }
+    try {
+        imageUrl = await fetchImageUrl(imgId) || imageUrl;
+        const authorData = await fetchAuthor(author);
+        authorName = authorData?.name || authorName;
+        authorAvatar = authorData?.avatar || authorAvatar;
+        totalComments = await fetchPostComments(id);
+        console.log(totalComments);
         
-        return "/assets/default.png";
-    }
-
-    async function fetchAuthorDetails(author) {
-        try {
-            const res = await fetch(`${process.env.API_BASE_URL}/users/${author}`);
-            if (res.ok) {
-                const authorData = await res.json();
-                return {
-                    name: authorData.name,
-                    avatar: authorData.avatar_urls[24],
-                };
-            }
-        } catch (err) {
-            console.error("Error fetching author details:", err);
-        }
-
-        return {
-            name: process.env.NEXT_PUBLIC_AUTHOR_NAME,
-            avatar: "/assets/default.png",
-        };
-    }
-
-    if (imgId) {
-        imageUrl = await fetchImageUrl(imgId);
-    }
-
-    if (author) {
-        const authorDetails = await fetchAuthorDetails(author);
-        authorName = authorDetails.name;
-        authorAvatar = authorDetails.avatar;
+    } catch (error) {
+        console.error("Error fetching data:", error);
     }
 
     return (
         <Link
-            href={url}
+            href={`/post/${slug}`}
             className="flex flex-col md:flex-row items-center justify-between w-full mb-8 gap-8 pb-8 border-b border-gray-200 last:border-b-0"
         >
             <div className="mt-2 px-4 w-full md:w-[80%] order-2 md:order-1">
@@ -92,7 +62,7 @@ const PostCard = async ({ imgId, title, content, url, date, author }) => {
                                 <path d="M11.9955 12H12.0045M15.991 12H16M8 12H8.00897" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </span>
-                        <span className="text-sm font-semibold">{Math.floor(Math.random() * 100)}</span>
+                        <span className="text-sm font-semibold">{totalComments}</span>
                     </div>
                 </div>
             </div>
