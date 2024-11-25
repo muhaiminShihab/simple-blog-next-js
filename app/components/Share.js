@@ -42,7 +42,7 @@ const Share = ({ iconSize = 24, iconColor = '#FFFFFF', link, withText = false })
                         <button className="btn btn-sm btn-circle btn-ghost text-black bg-gray-200 absolute right-2 top-2">✕</button>
                     </form>
 
-                    <h3 className="font-bold text-lg mt-8">Share to</h3>
+                    <h3 className="font-bold text-lg">Share to</h3>
                     <div className='flex items-center gap-2 mt-2'>
                         <Link href={generateShareUrl('facebook')} className='bg-gray-100 hover:bg-gray-200 rounded-full p-3 transition-all'>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="#000000" fill="none">
