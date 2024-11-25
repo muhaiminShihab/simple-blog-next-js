@@ -157,6 +157,8 @@ export const fetchPostComments = async (id) => {
         const res = await fetch(`${process.env.API_BASE_URL}/comments?post=${id}`);
         if (res.ok) {
             const comments = await res.json();
+            console.log(comments);
+            
             return comments;
         }
     } catch (err) {

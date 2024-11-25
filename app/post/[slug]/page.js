@@ -1,7 +1,7 @@
 import React from 'react'
 import he from 'he'
 import Share from '@/app/components/Share'
-import { fetchPost, fetchAuthor, fetchImageUrl } from '@/app/utils/wpApis'
+import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments } from '@/app/utils/wpApis'
 
 const page = async ({ params }) => {
     const slug = params.slug;
@@ -37,7 +37,8 @@ const page = async ({ params }) => {
 
             formattedDate = dateFormatter(new Date(post.date));
 
-            totalComments = await fetchPostComments(post.id).length;
+            const comments = await fetchPostComments(post.id);
+            totalComments = comments?.length || 0;
         }
     } catch (error) {
         console.error("Error fetching page data:", error);

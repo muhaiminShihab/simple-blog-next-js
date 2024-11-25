@@ -21,8 +21,9 @@ const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
         const authorData = await fetchAuthor(author);
         authorName = authorData?.name || authorName;
         authorAvatar = authorData?.avatar || authorAvatar;
-        totalComments = await fetchPostComments(id);
-        console.log(totalComments);
+        
+        const comments = await fetchPostComments(id);
+        totalComments = comments?.length || 0;
         
     } catch (error) {
         console.error("Error fetching data:", error);
