@@ -8,13 +8,13 @@ export const fetchSiteData = async () => {
         }
 
         const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
-        const encodedCredentials = Buffer.from(credentials).toString("base64"); // Use Buffer for Node compatibility
+        const encodedCredentials = Buffer.from(credentials).toString("base64");
 
         const res = await fetch(`${process.env.API_BASE_URL}/settings`, {
-            method: 'GET', // Use 'GET' for fetching data unless POST is required
+            method: 'GET',
             headers: {
                 'Authorization': `Basic ${encodedCredentials}`,
-                'Content-Type': 'application/json', // Ensure headers are correctly set
+                'Content-Type': 'application/json',
             },
         });
 
@@ -25,7 +25,7 @@ export const fetchSiteData = async () => {
         const data = await res.json();
 
         return {
-            title: he.decode(data?.title || "Default Title"), // Fallback to default
+            title: he.decode(data?.title || "Default Title"),
             description: data?.description || "Default Description",
             site_logo: data?.site_logo ? await fetchImageUrl(data.site_logo) : "/assets/author.jpg",
             site_icon: data?.site_icon ? await fetchImageUrl(data.site_icon) : "/assets/author.jpg",
@@ -161,5 +161,38 @@ export const fetchPostComments = async (id) => {
         }
     } catch (err) {
         console.error("Error fetching post comments:", err);
+    }
+};
+
+export const createComment = async (data) => {
+    try {
+        // Ensure environment variables are defined
+        if (!process.env.WP_USERNAME || !process.env.WP_APP_PASSWORD || !process.env.API_BASE_URL) {
+            throw new Error("Environment variables are not set correctly.");
+        }
+
+        const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
+        const encodedCredentials = Buffer.from(credentials).toString("base64");
+
+        const res = await fetch(`${process.env.API_BASE_URL}/comments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Basic ${encodedCredentials}`,
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+            const comment = await res.json();
+            console.log("Comment created:", comment);
+
+            return comment;
+        } else {
+            const error = await res.json();
+            console.error("Failed to create comment:", error);
+        }
+    } catch (err) {
+        console.error("Error creating comment:", err);
     }
 };
