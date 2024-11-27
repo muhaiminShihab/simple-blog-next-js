@@ -2,12 +2,14 @@ import Link from "next/link";
 import React from "react";
 import he from "he";
 import { fetchAuthor, fetchImageUrl, fetchPostComments } from "../utils/wpApis";
+import { nestComments } from "../utils/common";
 
 const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
     let imageUrl = "/assets/default.png";
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
     let totalComments = 0;
+    let comments = [];
 
     const decodedTitle = he.decode(title);
     const decodedContent = he.decode(content).replace(/<\/?[^>]+(>|$)/g, "");
@@ -22,7 +24,8 @@ const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
         authorName = authorData?.name || authorName;
         authorAvatar = authorData?.avatar || authorAvatar;
         
-        const comments = await fetchPostComments(id);
+        comments = await fetchPostComments(id);
+        comments = nestComments(comments);
         totalComments = comments?.length || 0;
         
     } catch (error) {

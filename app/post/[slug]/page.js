@@ -3,6 +3,7 @@ import he from 'he'
 import Share from '@/app/components/Share'
 import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments } from '@/app/utils/wpApis'
 import CommentCard from '@/app/components/CommentCard'
+import { dateFormatter, nestComments } from '@/app/utils/common'
 
 const page = async ({ params }) => {
     const { slug } = await params;
@@ -11,15 +12,7 @@ const page = async ({ params }) => {
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
     let totalComments = 0;
-
-    const dateFormatter = (date = new Date()) => {
-        return new Intl.DateTimeFormat("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-        }).format(date);
-    };
-
+    let comments = [];
     let formattedDate = dateFormatter();
     let post = {};
 
@@ -29,6 +22,7 @@ const page = async ({ params }) => {
 
         if (postData) {
             post = postData;
+            formattedDate = dateFormatter(new Date(post.date));
 
             // Fetch additional details asynchronously
             imageUrl = await fetchImageUrl(post.featured_media) || imageUrl;
@@ -39,7 +33,8 @@ const page = async ({ params }) => {
 
             formattedDate = dateFormatter(new Date(post.date));
 
-            const comments = await fetchPostComments(post.id);
+            comments = await fetchPostComments(post.id);
+            comments = nestComments(comments);
             totalComments = comments?.length || 0;
         }
     } catch (error) {
@@ -56,7 +51,7 @@ const page = async ({ params }) => {
                     </span>
                     <span>
                         <span className='block'>{authorName}</span>
-                        <span>{formattedDate}</span>
+                        <span className='text-sm'>{formattedDate}</span>
                     </span>
                 </div>
                 <div className="flex items-center gap-8 border-t border-b py-3 mb-8">
@@ -135,7 +130,7 @@ const page = async ({ params }) => {
             </div>
 
             <section className="border-t pt-16">
-                <div className="flex items-center mb-6 gap-2">
+                <div className="flex items-center mb-6 gap-2" id='comment'>
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24} color={"#000000"} fill={"none"}>
                             <path d="M2 12C2 7.52166 2 5.28249 3.39124 3.89124C4.78249 2.5 7.02166 2.5 11.5 2.5C15.9783 2.5 18.2175 2.5 19.6088 3.89124C21 5.28249 21 7.52166 21 12C21 16.4783 21 18.7175 19.6088 20.1088C18.2175 21.5 15.9783 21.5 11.5 21.5C7.02166 21.5 4.78249 21.5 3.39124 20.1088C2 18.7175 2 16.4783 2 12Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -170,13 +165,34 @@ const page = async ({ params }) => {
                     <button className='bg-blue-500 hover:bg-blue-600 transition-all text-white py-2 px-4 rounded-lg'>Comment</button>
                 </div>
 
-                <CommentCard />
-                <CommentCard isReply={true} />
-                <CommentCard isReply={true} />
-                <CommentCard />
-                <CommentCard />
-                <CommentCard isReply={true} />
-                <CommentCard />
+                {
+                    comments.map((comment, index) => (
+                        <div key={index}>
+                            <CommentCard comment={comment} />
+                            {comment.children && comment.children.length > 0 && (
+                                <div className="replies">
+                                    {comment.children.map((reply, replyIndex) => (
+                                        <div key={`reply-${replyIndex}`}>
+                                            <CommentCard isReply={true} comment={reply} />
+                                            {/* Render replies of replies recursively */}
+                                            {reply.children && reply.children.length > 0 && (
+                                                <div className="replies">
+                                                    {reply.children.map((nestedReply, nestedReplyIndex) => (
+                                                        <CommentCard
+                                                            key={`nested-reply-${nestedReplyIndex}`}
+                                                            isReply={true}
+                                                            comment={nestedReply}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))
+                }
             </section>
         </section>
     )
