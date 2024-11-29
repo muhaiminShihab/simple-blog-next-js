@@ -6,16 +6,16 @@ import CommentCard from '@/app/components/CommentCard'
 import { dateFormatter, nestComments } from '@/app/utils/common'
 import CommentForm from '@/app/components/CommentForm'
 
-let post = {};
-let imageUrl = "/assets/default.png";
 export const generateMetadata = async (props = {}, parent) => {
+    let post = await fetchPost(props.params.slug);
+    let imageUrl = await fetchImageUrl(post.featured_media) || "/assets/default.png";
     const siteData = await fetchSiteData();
 
     return {
-        title: post.title || siteData.title,
+        title: post.title.rendered || siteData.title,
         description: post.excerpt.rendered || siteData.description,
         openGraph: {
-            title: post.title || siteData.title,
+            title: post.title.rendered|| siteData.title,
             description: post.excerpt.rendered || siteData.description,
             images: [
                 {
@@ -27,7 +27,7 @@ export const generateMetadata = async (props = {}, parent) => {
         },
         twitter: {
             card: "summary_large_image",
-            title: post.title || siteData.title,
+            title: post.title.rendered|| siteData.title,
             description: post.excerpt.rendered || siteData.description,
             images: [
                 {
@@ -52,6 +52,8 @@ export const generateMetadata = async (props = {}, parent) => {
 const page = async ({ params }) => {
     const { slug } = await params;
 
+    let post = {};
+    let imageUrl = "/assets/default.png";
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
     let totalComments = 0;
