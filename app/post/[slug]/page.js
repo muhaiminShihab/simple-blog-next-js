@@ -6,20 +6,20 @@ import CommentCard from '@/app/components/CommentCard'
 import { dateFormatter, nestComments } from '@/app/utils/common'
 import CommentForm from '@/app/components/CommentForm'
 
-let pageTitle = "";
-let pageDescription = "";
+let post = {};
+let imageUrl = "/assets/default.png";
 export const generateMetadata = async (props = {}, parent) => {
     const siteData = await fetchSiteData();
 
     return {
-        title: pageTitle || siteData.title,
-        description: pageDescription || siteData.description,
+        title: post.title || siteData.title,
+        description: post.excerpt.rendered || siteData.description,
         openGraph: {
-            title: pageTitle || siteData.title,
-            description: pageDescription || siteData.description,
+            title: post.title || siteData.title,
+            description: post.excerpt.rendered || siteData.description,
             images: [
                 {
-                    url: siteData.site_logo,
+                    url: imageUrl || siteData.site_logo,
                     width: 800,
                     height: 600,
                 },
@@ -27,11 +27,11 @@ export const generateMetadata = async (props = {}, parent) => {
         },
         twitter: {
             card: "summary_large_image",
-            title: pageTitle || siteData.title,
-            description: pageDescription || siteData.description,
+            title: post.title || siteData.title,
+            description: post.excerpt.rendered || siteData.description,
             images: [
                 {
-                    url: siteData.site_logo,
+                    url: imageUrl || siteData.site_logo,
                     width: 800,
                     height: 600,
                 },
@@ -52,13 +52,11 @@ export const generateMetadata = async (props = {}, parent) => {
 const page = async ({ params }) => {
     const { slug } = await params;
 
-    let imageUrl = "/assets/default.png";
     let authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME;
     let authorAvatar = "/assets/dummy.webp";
     let totalComments = 0;
     let comments = [];
     let formattedDate = dateFormatter();
-    let post = {};
 
     try {
         // Fetch post data
@@ -66,8 +64,6 @@ const page = async ({ params }) => {
 
         if (postData) {
             post = postData;
-            pageTitle = post.title.rendered;
-            pageDescription = post.excerpt.rendered;
             formattedDate = dateFormatter(new Date(post.date));
 
             // Fetch additional details asynchronously
