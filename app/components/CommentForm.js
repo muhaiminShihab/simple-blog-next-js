@@ -13,21 +13,19 @@ const CommentForm = ({ postId }) => {
                 "author_name": name,
                 "author_email": email,
                 "content": comment,
-                "post": postId
+                "post": postId,
+                "status": "approved"
             };
-    
+
             let res = await createComment(data);
-    
+
             if (res) {
                 setName("");
                 setEmail("");
                 setComment("");
-    
-                console.log("Comment created:", res);
             }
         } catch (error) {
             console.error("Error creating comment:", error);
-            
         }
     }
 

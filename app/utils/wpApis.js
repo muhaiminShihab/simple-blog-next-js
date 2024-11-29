@@ -1,4 +1,6 @@
+"use server";
 import he from 'he';
+import { revalidateTag } from 'next/cache';
 
 export const fetchSiteData = async () => {
     try {
@@ -7,10 +9,15 @@ export const fetchSiteData = async () => {
             throw new Error("Environment variables are not set correctly.");
         }
 
+        // console.log(process.env.API_BASE_URL, process.env.WP_USERNAME, process.env.WP_APP_PASSWORD);
+
         const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
         const encodedCredentials = Buffer.from(credentials).toString("base64");
 
         const res = await fetch(`${process.env.API_BASE_URL}/settings`, {
+            next: {
+                tags: ["siteData"],
+            },
             method: 'GET',
             headers: {
                 'Authorization': `Basic ${encodedCredentials}`,
@@ -68,7 +75,11 @@ export const fetchImageUrl = async (id) => {
 
 export const fetchPosts = async () => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/posts`);
+        const res = await fetch(`${process.env.API_BASE_URL}/posts`, {
+            next: {
+                tags: ["posts"],
+            }
+        });
         if (res.ok) {
             const posts = await res.json();
             return posts;
@@ -82,7 +93,11 @@ export const fetchPosts = async () => {
 
 export const fetchCategories = async () => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/categories`);
+        const res = await fetch(`${process.env.API_BASE_URL}/categories`, {
+            next: {
+                tags: ["categories"],
+            }
+        });
         if (res.ok) {
             const categories = await res.json();
             return categories;
@@ -96,7 +111,11 @@ export const fetchCategories = async () => {
 
 export const fetchPost = async (slug) => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/posts?slug=${slug}`);
+        const res = await fetch(`${process.env.API_BASE_URL}/posts?slug=${slug}`, {
+            next: {
+                tags: ["post"],
+            }
+        });
         if (res.ok) {
             const post = await res.json();
             return post[0];
@@ -110,7 +129,11 @@ export const fetchPost = async (slug) => {
 
 export const fetchAuthor = async (id) => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/users/${id}`);
+        const res = await fetch(`${process.env.API_BASE_URL}/users/${id}`, {
+            next: {
+                tags: ["author"],
+            }
+        });
         if (res.ok) {
             const authorData = await res.json();
             return {
@@ -130,7 +153,11 @@ export const fetchAuthor = async (id) => {
 
 export const fetchCategory = async (slug) => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/categories?slug=${slug}`);
+        const res = await fetch(`${process.env.API_BASE_URL}/categories?slug=${slug}`, {
+            next: {
+                tags: ["category"],
+            }
+        });
         if (res.ok) {
             const category = await res.json();
             return category[0];
@@ -142,7 +169,11 @@ export const fetchCategory = async (slug) => {
 
 export const fetchCategoryPosts = async (id) => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/posts?categories=${id}`);
+        const res = await fetch(`${process.env.API_BASE_URL}/posts?categories=${id}`, {
+            next: {
+                tags: ["categoryPosts"],
+            }
+        });
         if (res.ok) {
             const posts = await res.json();
             return posts;
@@ -154,7 +185,11 @@ export const fetchCategoryPosts = async (id) => {
 
 export const fetchPostComments = async (id) => {
     try {
-        const res = await fetch(`${process.env.API_BASE_URL}/comments?post=${id}`);
+        const res = await fetch(`${process.env.API_BASE_URL}/comments?post=${id}`, {
+            next: {
+                tags: ["comments"],
+            }
+        });
         if (res.ok) {
             const comments = await res.json();
             return comments;
@@ -165,12 +200,14 @@ export const fetchPostComments = async (id) => {
 };
 
 export const createComment = async (data) => {
-    try {
-        // Ensure environment variables are defined
-        if (!process.env.WP_USERNAME || !process.env.WP_APP_PASSWORD || !process.env.API_BASE_URL) {
-            throw new Error("Environment variables are not set correctly.");
-        }
+    // Ensure environment variables are defined
+    if (!process.env.WP_USERNAME || !process.env.WP_APP_PASSWORD || !process.env.API_BASE_URL) {
+        throw new Error("Environment variables are not set correctly.");
+    }
 
+    // console.log(process.env.API_BASE_URL, process.env.WP_USERNAME, process.env.WP_APP_PASSWORD);
+
+    try {
         const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
         const encodedCredentials = Buffer.from(credentials).toString("base64");
 
@@ -184,9 +221,9 @@ export const createComment = async (data) => {
         });
 
         if (res.ok) {
-            const comment = await res.json();
-            console.log("Comment created:", comment);
+            revalidateTag("comments");
 
+            const comment = await res.json();
             return comment;
         } else {
             const error = await res.json();
