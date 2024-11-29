@@ -13,10 +13,10 @@ export const generateMetadata = async (props = {}, parent) => {
 
     return {
         title: post.title.rendered || siteData.title,
-        description: post.excerpt.rendered || siteData.description,
+        description: he.decode(post.excerpt.rendered).replace(/<\/?[^>]+(>|$)/g, "") || siteData.description,
         openGraph: {
-            title: post.title.rendered|| siteData.title,
-            description: post.excerpt.rendered || siteData.description,
+            title: post.title.rendered || siteData.title,
+            description: he.decode(post.excerpt.rendered).replace(/<\/?[^>]+(>|$)/g, "") || siteData.description,
             images: [
                 {
                     url: imageUrl || siteData.site_logo,
@@ -27,8 +27,8 @@ export const generateMetadata = async (props = {}, parent) => {
         },
         twitter: {
             card: "summary_large_image",
-            title: post.title.rendered|| siteData.title,
-            description: post.excerpt.rendered || siteData.description,
+            title: post.title.rendered || siteData.title,
+            description: he.decode(post.excerpt.rendered).replace(/<\/?[^>]+(>|$)/g, "") || siteData.description,
             images: [
                 {
                     url: imageUrl || siteData.site_logo,

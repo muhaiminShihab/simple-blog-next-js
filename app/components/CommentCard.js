@@ -20,7 +20,7 @@ const CommentCard = ({ isReply = false, comment }) => {
                 </div>
             </footer>
             <div dangerouslySetInnerHTML={{ __html: comment.content.rendered }}></div>
-            <div className="flex items-center mt-4 space-x-4">
+            {/* <div className="flex items-center mt-4 space-x-4">
                 <Link href="#comment" type="button"
                     className="flex items-center text-sm hover:underline font-medium">
                     <svg className="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
@@ -28,7 +28,7 @@ const CommentCard = ({ isReply = false, comment }) => {
                     </svg>
                     Reply
                 </Link>
-            </div>
+            </div> */}
         </article>
     )
 }
