@@ -1,10 +1,53 @@
 import React from 'react'
 import he from 'he'
 import Share from '@/app/components/Share'
-import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments } from '@/app/utils/wpApis'
+import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments, fetchSiteData } from '@/app/utils/wpApis'
 import CommentCard from '@/app/components/CommentCard'
 import { dateFormatter, nestComments } from '@/app/utils/common'
 import CommentForm from '@/app/components/CommentForm'
+
+let pageTitle = "";
+let pageDescription = "";
+export const generateMetadata = async (props = {}, parent) => {
+    const siteData = await fetchSiteData();
+
+    return {
+        title: pageTitle || siteData.title,
+        description: pageDescription || siteData.description,
+        openGraph: {
+            title: pageTitle || siteData.title,
+            description: pageDescription || siteData.description,
+            images: [
+                {
+                    url: siteData.site_logo,
+                    width: 800,
+                    height: 600,
+                },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: pageTitle || siteData.title,
+            description: pageDescription || siteData.description,
+            images: [
+                {
+                    url: siteData.site_logo,
+                    width: 800,
+                    height: 600,
+                },
+            ],
+        },
+        robots: {
+            index: true,
+            follow: true,
+        },
+        icons: {
+            icon: siteData.site_icon,
+            shortcut: siteData.site_icon,
+            apple: siteData.site_icon,
+        },
+    };
+};
 
 const page = async ({ params }) => {
     const { slug } = await params;
@@ -23,6 +66,8 @@ const page = async ({ params }) => {
 
         if (postData) {
             post = postData;
+            pageTitle = post.title.rendered;
+            pageDescription = post.excerpt.rendered;
             formattedDate = dateFormatter(new Date(post.date));
 
             // Fetch additional details asynchronously

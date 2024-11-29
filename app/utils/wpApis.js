@@ -52,16 +52,16 @@ export const fetchSiteData = async () => {
         const data = await fetchWithCache("/settings", "siteData");
 
         return {
-            title: he.decode(data?.title || "Default Title"),
-            description: data?.description || "Default Description",
+            title: he.decode(data?.title || process.env.NEXT_PUBLIC_APP_NAME),
+            description: data?.description || "",
             site_logo: data?.site_logo ? await fetchImageUrl(data.site_logo) : "/assets/author.jpg",
             site_icon: data?.site_icon ? await fetchImageUrl(data.site_icon) : "/assets/author.jpg",
         };
     } catch (err) {
         console.error("Error fetching site data:", err);
         return {
-            title: "Default Title",
-            description: "Default Description",
+            title: process.env.NEXT_PUBLIC_APP_NAME,
+            description: "",
             site_logo: "/assets/author.jpg",
             site_icon: "/assets/author.jpg",
         };
