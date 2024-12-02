@@ -33,12 +33,9 @@ const Share = ({ iconSize = 24, iconColor = '#FFFFFF', link, withText = false })
                     withText && <span>Share</span>
                 }
             </div>
+            
             <dialog id={"socialShare" + link} className="modal">
                 <div className="modal-box text-black">
-                    <form method="dialog">
-                        <button className="btn btn-sm btn-circle btn-ghost text-black bg-gray-200 absolute right-2 top-2">✕</button>
-                    </form>
-
                     <h3 className="font-bold text-lg">Share to</h3>
                     <div className='flex items-center gap-2 mt-2'>
                         <Link href={generateShareUrl('facebook')} className='bg-gray-100 hover:bg-gray-200 rounded-full p-3 transition-all'>
@@ -73,7 +70,14 @@ const Share = ({ iconSize = 24, iconColor = '#FFFFFF', link, withText = false })
                             </svg>
                         </Link>
                     </div>
+
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost text-black bg-gray-200 absolute right-2 top-2">✕</button>
+                    </form>
                 </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                </form>
             </dialog>
         </>
     )
