@@ -21,7 +21,7 @@ const PostCardSkeleton = () => {
                 </div>
                 <div className="flex items-center gap-8">
                     <div className="text-sm animate-pulse bg-gray-300 w-10 h-4 rounded-lg"></div>
-                    <div className="text-sm flex items-center gap-1">
+                    {/* <div className="text-sm flex items-center gap-1">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={18} height={18} color={"#000000"} fill={"none"}>
                                 <path d="M2 12.5C2 11.3954 2.89543 10.5 4 10.5C5.65685 10.5 7 11.8431 7 13.5V17.5C7 19.1569 5.65685 20.5 4 20.5C2.89543 20.5 2 19.6046 2 18.5V12.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -29,7 +29,7 @@ const PostCardSkeleton = () => {
                             </svg>
                         </span>
                         <span className="animate-pulse bg-gray-300 w-10 h-4 rounded-lg"></span>
-                    </div>
+                    </div> */}
                     <div className="text-sm flex items-center gap-1">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={18} height={18} color={"#000000"} fill={"none"}>
