@@ -19,7 +19,7 @@ const Pagination = ({ page, perPage, totalPosts }) => {
             return;
         }
 
-        router.push(`/?page=${newPage}`, { scroll: false });
+        router.push(`/?page=${newPage}`, undefined, { scroll: false });
     };
 
     return (
