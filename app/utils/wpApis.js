@@ -83,10 +83,7 @@ export const fetchImageUrl = async (id) => {
 // Fetch posts
 export const fetchPosts = async (page = 1, perPage = 10) => {
     try {
-        return await fetchWithCache("/posts", "posts", false, {
-            page: page,
-            per_page: perPage
-        });
+        return await fetchWithCache(`/posts?page=${page}&per_page=${perPage}`, "posts", false);
     } catch (err) {
         console.error("Error fetching posts:", err);
         return [];

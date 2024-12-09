@@ -4,23 +4,23 @@ import PostCard from '@/app/components/PostCard';
 import { fetchCategories, fetchPosts } from '@/app/utils/wpApis';
 import Pagination from './components/Pagination';
 
-const Home = async () => {
+const Home = async ({ searchParams }) => {
     let posts = [];
+    let totalPosts = 0;
     let categories = [];
-    let page = 2;
+    let totalCategories = 0;
+    let page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
     let perPage = 5;
 
     const fetchData = async () => {
         posts = await fetchPosts(page, perPage);
+        totalPosts = posts.length;
+
         categories = await fetchCategories();
+        totalCategories = categories.length;
     };
 
     await fetchData(page);
-
-    const changePage = async (page) => {
-        page = page >= 1 ? page : 1;
-        await fetchData(page);
-    };
 
     return (
         <section className='container mx-auto my-10 px-4 lg:px-0'>
@@ -41,15 +41,10 @@ const Home = async () => {
                                 />
                             ))
                         }
-
-                        {/* <div className='w-full bg-gray-100 rounded-lg text-center py-16'>
-                            <img src='/assets/404.svg' className='w-1/3 mx-auto' />
-                            <h3 className='text-xl'>No Data Found. Stay Tuned.</h3>
-                        </div> */}
                     </div>
-                    
+
                     <div className='mt-6'>
-                        <Pagination page={page} />
+                        <Pagination page={page} perPage={perPage} totalPosts={totalPosts} />
                     </div>
                 </div>
                 <div className='lg:w-[25%] order-1 lg:order-2 border-l pl-6'>
