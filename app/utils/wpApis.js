@@ -2,54 +2,53 @@
 import he from "he";
 import { revalidateTag } from "next/cache";
 
-// Utility: Validate environment variables
+// Utility: Validate environment variables once during initialization
 const validateEnv = () => {
     const requiredEnv = ["WP_USERNAME", "WP_APP_PASSWORD", "API_BASE_URL"];
-    requiredEnv.forEach((envVar) => {
-        if (!process.env[envVar]) {
-            throw new Error(`Environment variable ${envVar} is not set.`);
-        }
-    });
+    const missingVars = requiredEnv.filter((envVar) => !process.env[envVar]);
+
+    if (missingVars.length) {
+        throw new Error(`Missing required environment variables: ${missingVars.join(", ")}`);
+    }
 };
 
+validateEnv();
+
 // Utility: Fetch wrapper
-const fetchWithAuth = async (url, options = {}) => {
-    validateEnv();
+const fetchWrapper = async (url, { headers = {}, auth = false, ...options } = {}) => {
+    const baseHeaders = { "Content-Type": "application/json" };
 
-    const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
-    const encodedCredentials = Buffer.from(credentials).toString("base64");
-
-    const headers = {
-        "Authorization": `Basic ${encodedCredentials}`,
-        "Content-Type": "application/json",
-        ...options.headers,
-    };
+    if (auth) {
+        const credentials = `${process.env.WP_USERNAME}:${process.env.WP_APP_PASSWORD}`;
+        const encodedCredentials = Buffer.from(credentials).toString("base64");
+        headers["Authorization"] = `Basic ${encodedCredentials}`;
+    }
 
     const response = await fetch(url, {
+        headers: { ...baseHeaders, ...headers },
         ...options,
-        headers,
     });
 
     if (!response.ok) {
         const errorDetails = await response.text();
-        throw new Error(`Error fetching ${url}. Status: ${response.status}. Details: ${errorDetails}`);
+        throw new Error(
+            `Error fetching ${url}. Status: ${response.status}. Details: ${errorDetails}`
+        );
     }
 
     return response.json();
 };
 
 // Utility: Fetch with caching tags
-const fetchWithCache = async (endpoint, tag, options = {}) => {
-    return fetchWithAuth(`${process.env.API_BASE_URL}${endpoint}`, {
-        next: { tags: [tag] },
-        ...options,
-    });
+const fetchWithCache = async (endpoint, tag, auth = false, options = {}) => {
+    const url = `${process.env.API_BASE_URL}${endpoint}`;
+    return fetchWrapper(url, { ...options, auth, next: { tags: [tag] } });
 };
 
 // Fetch site data
 export const fetchSiteData = async () => {
     try {
-        const data = await fetchWithCache("/settings", "siteData");
+        const data = await fetchWithCache("/settings", "siteData", true);
 
         return {
             title: he.decode(data?.title || process.env.NEXT_PUBLIC_APP_NAME),
@@ -59,6 +58,7 @@ export const fetchSiteData = async () => {
         };
     } catch (err) {
         console.error("Error fetching site data:", err);
+
         return {
             title: process.env.NEXT_PUBLIC_APP_NAME,
             description: "",
@@ -81,9 +81,12 @@ export const fetchImageUrl = async (id) => {
 };
 
 // Fetch posts
-export const fetchPosts = async () => {
+export const fetchPosts = async (page = 1, perPage = 10) => {
     try {
-        return await fetchWithCache("/posts", "posts");
+        return await fetchWithCache("/posts", "posts", false, {
+            page: page,
+            per_page: perPage
+        });
     } catch (err) {
         console.error("Error fetching posts:", err);
         return [];
