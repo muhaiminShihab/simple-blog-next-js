@@ -1,23 +1,22 @@
-import React from 'react';
 import CategoryCard from '@/app/components/CategoryCard';
 import PostCard from '@/app/components/PostCard';
 import { fetchCategories, fetchPosts } from '@/app/utils/wpApis';
 import Pagination from './components/Pagination';
 
-const Home = async ({ searchParams }) => {
+export default async function Home({ searchParams }) {
     let posts = [];
     let totalPosts = 0;
     let categories = [];
     let totalCategories = 0;
-    let page = searchParams.page ? parseInt(searchParams.page, 10) : 1;
+    let page = await searchParams.page ? parseInt(searchParams.page) : 1;
     let perPage = 5;
 
     const fetchData = async () => {
         posts = await fetchPosts(page, perPage);
         totalPosts = posts.length;
 
-        categories = await fetchCategories();
-        totalCategories = categories.length;
+        // categories = await fetchCategories();
+        // totalCategories = categories.length;
     };
 
     await fetchData(page);
@@ -62,5 +61,3 @@ const Home = async ({ searchParams }) => {
         </section>
     )
 }
-
-export default Home

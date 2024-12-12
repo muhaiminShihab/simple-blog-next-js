@@ -1,5 +1,4 @@
 import PostCardSkeleton from '@/app/components/PostCardSkeleton';
-import React from 'react';
 
 const page = async () => {
     return (

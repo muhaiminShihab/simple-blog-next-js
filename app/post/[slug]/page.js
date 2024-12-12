@@ -1,4 +1,3 @@
-import React from 'react'
 import he from 'he'
 import Share from '@/app/components/Share'
 import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments, fetchSiteData } from '@/app/utils/wpApis'

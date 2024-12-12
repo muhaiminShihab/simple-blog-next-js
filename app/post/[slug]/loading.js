@@ -1,4 +1,3 @@
-import React from 'react'
 import Share from '@/app/components/Share';
 
 const page = () => {

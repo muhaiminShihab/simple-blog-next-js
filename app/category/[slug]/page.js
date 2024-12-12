@@ -1,6 +1,5 @@
 import CategoryCard from '@/app/components/CategoryCard';
 import PostCard from '@/app/components/PostCard';
-import React from 'react';
 import { fetchCategory, fetchCategoryPosts } from '@/app/utils/wpApis';
 
 const page = async ({ params }) => {

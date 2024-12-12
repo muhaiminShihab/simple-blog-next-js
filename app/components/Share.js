@@ -1,6 +1,5 @@
 "use client"
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
 
 const Share = ({ iconSize = 24, iconColor = '#FFFFFF', link, withText = false }) => {
     const generateShareUrl = (platform) => {

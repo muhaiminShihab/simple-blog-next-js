@@ -1,5 +1,4 @@
 import { fetchSiteData } from '@/app/utils/wpApis';
-import React from 'react'
 
 const Footer = async () => {
   let siteData = {

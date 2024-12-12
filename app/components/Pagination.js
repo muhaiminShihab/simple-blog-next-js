@@ -1,6 +1,5 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import React from 'react'
 import { fetchPosts } from '../utils/wpApis';
 
 const Pagination = ({ page, perPage, totalPosts }) => {

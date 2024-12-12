@@ -1,4 +1,3 @@
-import React from 'react';
 import PostCardSkeleton from './components/PostCardSkeleton';
 import CategoryCardSkeleton from './components/CategoryCardSkeleton';
 
