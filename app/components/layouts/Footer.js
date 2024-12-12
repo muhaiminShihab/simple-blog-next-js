@@ -14,7 +14,7 @@ const Footer = async () => {
       <div className='container mx-auto px-4 lg:px-0 py-2'>
         <div className='text-center md:flex justify-between items-center'>
           <p>Copyright &copy;{new Date().getFullYear()} {siteData.title}.</p>
-          <p>Developed with ❤️ by <a href={process.env.NEXT_PUBLIC_AUTHOR_URL} target='_blank' rel='noreferrer' className='underline text-blue-500'>{process.env.NEXT_PUBLIC_AUTHOR_NAME}</a>.</p>
+          <p>Developed with ❤️ by <a href="https://linkedin.com/in/muhaiminshihab" target='_blank' rel='noreferrer' className='underline text-blue-500'>Muhaimin Shihab</a>.</p>
         </div>
       </div>
     </div>
