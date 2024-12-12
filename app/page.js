@@ -15,8 +15,8 @@ export default async function Home({ searchParams }) {
         posts = await fetchPosts(page, perPage);
         totalPosts = posts.length;
 
-        // categories = await fetchCategories();
-        // totalCategories = categories.length;
+        categories = await fetchCategories();
+        totalCategories = categories.length;
     };
 
     await fetchData(page);

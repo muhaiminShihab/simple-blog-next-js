@@ -2,6 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Host Grotesk';
+  src: url('/Host_Grotesk/Host_Grotesk/static/HostGrotesk-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Host Grotesk Medium';
+  src: url('/Host_Grotesk/Host_Grotesk/static/HostGrotesk-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Host Grotesk SemiBold';
+  src: url('/Host_Grotesk/Host_Grotesk/static/HostGrotesk-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Host Grotesk Bold';
+  src: url('/Host_Grotesk/Host_Grotesk/static/HostGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Host Grotesk ExtraBold';
+  src: url('/Host_Grotesk/Host_Grotesk/static/HostGrotesk-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -18,7 +54,7 @@ body,
 html {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Host Grotesk', sans-serif;
   scroll-behavior: smooth;
 }
 
