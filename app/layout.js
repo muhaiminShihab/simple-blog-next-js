@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./wp-block.css";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import { fetchSiteData } from "./utils/wpApis";
