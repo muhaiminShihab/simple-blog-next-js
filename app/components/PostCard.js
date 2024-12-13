@@ -1,8 +1,8 @@
 import Link from "next/link";
-import React from "react";
 import he from "he";
 import { fetchAuthor, fetchImageUrl, fetchPostComments } from "../utils/wpApis";
 import { nestComments } from "../utils/common";
+import Image from "next/image";
 
 const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
     let imageUrl = "/assets/default.png";
@@ -23,11 +23,11 @@ const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
         const authorData = await fetchAuthor(author);
         authorName = authorData?.name || authorName;
         authorAvatar = authorData?.avatar || authorAvatar;
-        
+
         comments = await fetchPostComments(id);
         comments = nestComments(comments);
         totalComments = comments?.length || 0;
-        
+
     } catch (error) {
         console.error("Error fetching data:", error);
     }
@@ -37,7 +37,7 @@ const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
             href={`/post/${slug}`}
             className="flex flex-col md:flex-row items-center justify-between w-full mb-8 gap-8 pb-8 border-b border-gray-200 last:border-b-0"
         >
-            <div className="mt-2 px-4 w-full md:w-[80%] order-2 md:order-1">
+            <div className="px-4 w-full md:w-[80%] order-2 md:order-1">
                 <div className="text-sm flex items-center gap-2">
                     <span className="w-6 h-6 rounded-full bg-gray-500 overflow-hidden">
                         <img src={authorAvatar} alt={authorName} className="w-full object-cover" />
@@ -71,7 +71,16 @@ const PostCard = async ({ imgId, title, content, slug, date, author, id }) => {
                 </div>
             </div>
             <div className="w-full md:w-[20%] order-1 md:order-2">
-                <img src={imageUrl} alt={decodedTitle} className="w-full ml-auto rounded-lg" />
+                <div className="relative overflow-hidden rounded-lg w-full pb-[50%] lg:pb-[80%]">
+                    <Image
+                        src={imageUrl}
+                        alt={decodedTitle}
+                        layout="fill"
+                        objectFit="cover"
+                        quality={100}
+                        className="rounded-lg"
+                    />
+                </div>
             </div>
         </Link>
     );

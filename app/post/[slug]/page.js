@@ -4,6 +4,7 @@ import { fetchPost, fetchAuthor, fetchImageUrl, fetchPostComments, fetchSiteData
 import CommentCard from '@/app/components/CommentCard'
 import { dateFormatter, nestComments } from '@/app/utils/common'
 import CommentForm from '@/app/components/CommentForm'
+import Image from 'next/image'
 
 export const generateMetadata = async (props = {}, parent) => {
     let post = await fetchPost(props.params.slug);
@@ -97,6 +98,7 @@ const page = async ({ params }) => {
                         <span className='text-sm'>{formattedDate}</span>
                     </span>
                 </div>
+
                 <div className="flex items-center gap-8 border-t border-b py-3 mb-8">
                     {/* <div className="text-sm flex items-center gap-1 cursor-pointer">
                         <span>
@@ -120,7 +122,10 @@ const page = async ({ params }) => {
                         <Share iconSize={18} iconColor='#000000' link={process.env.NEXT_PUBLIC_APP_URL + "/post/" + post.slug} withText={true} />
                     </div>
                 </div>
-                <img src={imageUrl} alt='#' className='rounded-lg mx-auto' />
+
+                <div className='relative overflow-hidden rounded-lg w-full' style={{ paddingBottom: '80%' }}>
+                    <Image quality={100} layout='fill' src={imageUrl} objectFit='cover' alt={he.decode(post.title.rendered)} className='rounded-lg' />
+                </div>
             </div>
 
             <div className='my-16 overflow-x-hidden text-wrap'>

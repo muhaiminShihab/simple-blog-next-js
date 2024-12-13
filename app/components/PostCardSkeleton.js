@@ -40,8 +40,7 @@ const PostCardSkeleton = () => {
                 </div>
             </div>
             <div className="w-full md:w-[20%] order-1 md:order-2">
-                {/* <img src="/assets/default.png" alt="#" className="w-full ml-auto rounded-lg" /> */}
-                <div className='animate-pulse bg-gray-300 w-full ml-auto h-32 rounded-lg'></div>
+                <div className='animate-pulse bg-gray-300 w-full ml-auto h-40 rounded-lg'></div>
             </div>
         </div>
     )
