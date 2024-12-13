@@ -5,6 +5,7 @@ import CommentCard from '@/app/components/CommentCard'
 import { dateFormatter, nestComments } from '@/app/utils/common'
 import CommentForm from '@/app/components/CommentForm'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const generateMetadata = async (props = {}, parent) => {
     let post = await fetchPost(props.params.slug);
@@ -109,7 +110,7 @@ const page = async ({ params }) => {
                         </span>
                         <span className="text-sm font-semibold">{(totalComments * 10 / 100)}%</span>
                     </div> */}
-                    <div className="text-sm flex items-center gap-1 cursor-pointer">
+                    <Link href="#comment" className="text-sm flex items-center gap-1 cursor-pointer">
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={18} height={18} color={"#000000"} fill={"none"}>
                                 <path d="M22 11.5667C22 16.8499 17.5222 21.1334 12 21.1334C11.3507 21.1343 10.7032 21.0742 10.0654 20.9545C9.60633 20.8682 9.37678 20.8251 9.21653 20.8496C9.05627 20.8741 8.82918 20.9948 8.37499 21.2364C7.09014 21.9197 5.59195 22.161 4.15111 21.893C4.69874 21.2194 5.07275 20.4112 5.23778 19.5448C5.33778 19.0148 5.09 18.5 4.71889 18.1231C3.03333 16.4115 2 14.1051 2 11.5667C2 6.28357 6.47778 2 12 2C17.5222 2 22 6.28357 22 11.5667Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -117,7 +118,7 @@ const page = async ({ params }) => {
                             </svg>
                         </span>
                         <span className="text-sm font-semibold">{totalComments}</span>
-                    </div>
+                    </Link>
                     <div className="text-sm flex items-center gap-1">
                         <Share iconSize={18} iconColor='#000000' link={process.env.NEXT_PUBLIC_APP_URL + "/post/" + post.slug} withText={true} />
                     </div>

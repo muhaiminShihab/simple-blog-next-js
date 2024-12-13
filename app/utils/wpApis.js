@@ -162,7 +162,8 @@ export const fetchPostComments = async (id) => {
 // Create a new comment
 export const createComment = async (data) => {
     try {
-        const comment = await fetchWithAuth(`${process.env.API_BASE_URL}/comments`, {
+        const params = `author_name=${data.author_name}&author_email=${data.author_email}&content=${data.content}&post=${data.post}`;
+        const comment = await fetchWithCache(`/comments?${params}`, 'comments', true, {
             method: "POST",
             body: JSON.stringify(data),
         });
