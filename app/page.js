@@ -10,10 +10,14 @@ export default async function Home({ searchParams }) {
     let totalCategories = 0;
     let page = await searchParams.page ? parseInt(searchParams.page) : 1;
     let perPage = 5;
+    let nextPagePostsLength = 0;
 
     const fetchData = async () => {
         posts = await fetchPosts(page, perPage);
         totalPosts = posts.length;
+
+        let nextPagePosts = await fetchPosts(page + 1, perPage);
+        nextPagePostsLength = nextPagePosts.length;
 
         categories = await fetchCategories();
         totalCategories = categories.length;
@@ -43,7 +47,7 @@ export default async function Home({ searchParams }) {
                     </div>
 
                     <div className='mt-6'>
-                        <Pagination page={page} perPage={perPage} totalPosts={totalPosts} />
+                        <Pagination page={page} perPage={perPage} totalPosts={totalPosts} nextPagePostsLength={nextPagePostsLength} />
                     </div>
                 </div>
                 <div className='lg:w-[25%] order-1 lg:order-2 border-l pl-6'>
